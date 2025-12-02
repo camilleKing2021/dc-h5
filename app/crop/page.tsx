@@ -1,92 +1,52 @@
+/*
+ * @Descripttion: 
+ * @Author: zhaozheng
+ * @Version: 0.0.1
+ * @Date: 2025-12-01 19:46:02
+ * @LastEditors: zhaozheng
+ * @LastEditTime: 2025-12-02 21:49:16
+ */
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 import CropperView from '@/components/CropperView';
 import BottomButton from '@/components/BottomButton';
-import { Area } from 'react-easy-crop';
 import { useToast } from '@/components/ui/Toast';
-
-// 工具函数：创建裁剪后的图片
-async function getCroppedImg(
-    imageSrc: string,
-    pixelCrop: Area
-): Promise<Blob> {
-    const image = new Image();
-    image.src = imageSrc;
-
-    await new Promise((resolve) => {
-        image.onload = resolve;
-    });
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    if (!ctx) {
-        throw new Error('Canvas context not available');
-    }
-
-    canvas.width = pixelCrop.width;
-    canvas.height = pixelCrop.height;
-
-    ctx.drawImage(
-        image,
-        pixelCrop.x,
-        pixelCrop.y,
-        pixelCrop.width,
-        pixelCrop.height,
-        0,
-        0,
-        pixelCrop.width,
-        pixelCrop.height
-    );
-
-    return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => {
-            if (blob) {
-                resolve(blob);
-            } else {
-                reject(new Error('Canvas is empty'));
-            }
-        }, 'image/jpeg', 0.95);
-    });
-}
+import { ReactCropperElement } from 'react-cropper';
 
 export default function CropPage() {
     const router = useRouter();
     const toast = useToast();
     const { previewUrl, customSize, setCroppedImage } = useAppStore();
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
+    const cropperRef = useRef<ReactCropperElement>(null);
 
     // 计算裁剪比例
     const aspect = customSize.width / customSize.height;
 
-    const handleCropComplete = useCallback((croppedArea: Area) => {
-        setCroppedAreaPixels(croppedArea);
-    }, []);
-
-    const handleConfirm = async () => {
-        if (!previewUrl || !croppedAreaPixels) {
-            toast.show('请先调整裁剪区域');
-            return;
-        }
+    const handleConfirm = () => {
+        const cropper = cropperRef.current?.cropper;
+        if (!cropper) return;
 
         setIsProcessing(true);
 
         try {
-            const croppedBlob = await getCroppedImg(previewUrl, croppedAreaPixels);
-            setCroppedImage(croppedBlob);
-
-            toast.show('裁剪成功');
-
-            // 跳转回首页
-            router.push('/');
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                if (blob) {
+                    setCroppedImage(blob);
+                    toast.show('裁剪成功');
+                    // 跳转回首页
+                    router.push('/');
+                } else {
+                    toast.show('裁剪失败，请重试');
+                }
+                setIsProcessing(false);
+            }, 'image/jpeg', 0.95);
         } catch (error) {
             console.error('Crop error:', error);
             toast.show('裁剪失败，请重试');
-        } finally {
             setIsProcessing(false);
         }
     };
@@ -125,7 +85,7 @@ export default function CropPage() {
                     <CropperView
                         imageUrl={previewUrl}
                         aspect={aspect}
-                        onCropComplete={handleCropComplete}
+                        onRef={(ref) => (cropperRef.current = ref)}
                     />
                 </div>
 
@@ -134,7 +94,7 @@ export default function CropPage() {
                     <BottomButton
                         text={isProcessing ? '处理中...' : '完成裁剪'}
                         onClick={handleConfirm}
-                        disabled={isProcessing || !croppedAreaPixels}
+                        disabled={isProcessing}
                         className="!shadow-none"
                     />
                 </div>

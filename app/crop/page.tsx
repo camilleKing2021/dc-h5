@@ -6,7 +6,7 @@ import { useAppStore } from '@/store/useAppStore';
 import CropperView from '@/components/CropperView';
 import BottomButton from '@/components/BottomButton';
 import { Area } from 'react-easy-crop';
-import { Toast } from 'antd-mobile';
+import { useToast } from '@/components/ui/Toast';
 
 // 工具函数：创建裁剪后的图片
 async function getCroppedImg(
@@ -55,6 +55,7 @@ async function getCroppedImg(
 
 export default function CropPage() {
     const router = useRouter();
+    const toast = useToast();
     const { previewUrl, customSize, setCroppedImage } = useAppStore();
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -68,10 +69,7 @@ export default function CropPage() {
 
     const handleConfirm = async () => {
         if (!previewUrl || !croppedAreaPixels) {
-            Toast.show({
-                content: '请先调整裁剪区域',
-                position: 'center',
-            });
+            toast.show('请先调整裁剪区域');
             return;
         }
 
@@ -81,21 +79,13 @@ export default function CropPage() {
             const croppedBlob = await getCroppedImg(previewUrl, croppedAreaPixels);
             setCroppedImage(croppedBlob);
 
-            Toast.show({
-                content: '裁剪成功',
-                position: 'center',
-            });
+            toast.show('裁剪成功');
 
-            // 跳转到生成页面
-            setTimeout(() => {
-                router.push('/generate');
-            }, 500);
+            // 跳转回首页
+            router.push('/');
         } catch (error) {
             console.error('Crop error:', error);
-            Toast.show({
-                content: '裁剪失败，请重试',
-                position: 'center',
-            });
+            toast.show('裁剪失败，请重试');
         } finally {
             setIsProcessing(false);
         }
@@ -112,10 +102,10 @@ export default function CropPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex flex-col">
-            <div className="min-h-screen flex flex-col w-full relative">
+        <div className="fixed inset-0 bg-black z-50 flex justify-center">
+            <div className="w-full max-w-[750px] h-full flex flex-col relative bg-black">
                 {/* 顶部导航 */}
-                <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-5 py-4">
+                <div className="flex items-center justify-between px-5 py-4 z-20">
                     <button
                         onClick={handleBack}
                         className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
@@ -131,7 +121,7 @@ export default function CropPage() {
                 </div>
 
                 {/* 裁剪区域 */}
-                <div className="flex-1 relative">
+                <div className="flex-1 relative w-full bg-black">
                     <CropperView
                         imageUrl={previewUrl}
                         aspect={aspect}
@@ -140,11 +130,12 @@ export default function CropPage() {
                 </div>
 
                 {/* 底部按钮 */}
-                <div className="p-6 bg-gradient-to-t from-black/80 to-transparent">
+                <div className="p-6 bg-gradient-to-t from-black/60 to-transparent z-20">
                     <BottomButton
                         text={isProcessing ? '处理中...' : '完成裁剪'}
                         onClick={handleConfirm}
                         disabled={isProcessing || !croppedAreaPixels}
+                        className="!shadow-none"
                     />
                 </div>
             </div>

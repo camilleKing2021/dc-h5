@@ -8,6 +8,7 @@
  */
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ToastProvider } from "@/components/ui/Toast";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,9 +42,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex justify-center bg-[#F8F8F8]`}
       >
-        <div className="w-full max-w-[750px] min-h-screen">
-          {children}
-        </div>
+        <ToastProvider>
+          <div className="w-full max-w-[750px] min-h-screen">
+            {children}
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );

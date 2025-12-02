@@ -4,20 +4,22 @@
  * @Version: 0.0.1
  * @Date: 2025-12-01 19:44:40
  * @LastEditors: zhaozheng
- * @LastEditTime: 2025-12-01 21:19:14
+ * @LastEditTime: 2025-12-02 21:36:46
  */
 'use client';
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { Toast } from 'antd-mobile';
+import { useToast } from '@/components/ui/Toast';
 
 interface UploadBoxProps {
     onSelect: (file: File) => void;
+    previewImage?: string | null;
 }
 
-export default function UploadBox({ onSelect }: UploadBoxProps) {
+export default function UploadBox({ onSelect, previewImage }: UploadBoxProps) {
     const inputRef = useRef<HTMLInputElement>(null);
+    const toast = useToast();
 
     const handleClick = () => {
         inputRef.current?.click();
@@ -29,19 +31,13 @@ export default function UploadBox({ onSelect }: UploadBoxProps) {
 
         // 验证文件类型
         if (!file.type.startsWith('image/')) {
-            Toast.show({
-                content: '请选择图片文件',
-                position: 'center',
-            });
+            toast.show('请选择图片文件');
             return;
         }
 
         // 验证文件大小（限制 10MB）
-        if (file.size > 10 * 1024 * 1024) {
-            Toast.show({
-                content: '图片大小不能超过 10MB',
-                position: 'center',
-            });
+        if (file.size > 20 * 1024 * 1024) {
+            toast.show('图片大小不能超过 20MB');
             return;
         }
 
@@ -52,27 +48,37 @@ export default function UploadBox({ onSelect }: UploadBoxProps) {
         <>
             <div
                 onClick={handleClick}
-                className="relative w-full aspect-square bg-[#fff0f5] rounded-3xl border-2 border-dashed border-[#F9A8D4] flex flex-col items-center justify-center cursor-pointer active:scale-95 transition-transform"
+                className="relative w-full h-[300px] bg-[#fff0f5] rounded-3xl border-2 border-dashed border-[#F9A8D4] flex flex-col items-center justify-center cursor-pointer"
             >
-                {/* 上传图标 */}
-                <div className="w-12 h-12 mb-3 flex items-center justify-center bg-white rounded-full">
-                    <Image
-                        src="/assets/icons/upload.svg"
-                        alt="上传"
-                        width={19}
-                        height={19}
+                {previewImage ? (
+                    <img
+                        src={previewImage}
+                        alt="Preview"
+                        className="w-full h-full object-contain p-2"
                     />
-                </div>
+                ) : (
+                    <>
+                        {/* 上传图标 */}
+                        <div className="w-12 h-12 mb-3 flex items-center justify-center bg-white rounded-full">
+                            <Image
+                                src="/assets/icons/upload.svg"
+                                alt="上传"
+                                width={19}
+                                height={19}
+                            />
+                        </div>
 
-                {/* 上传文字 */}
-                <p className="text-[#F087C0] font-medium text-sm">
-                    点击上传图片
-                </p>
+                        {/* 上传文字 */}
+                        <p className="text-[#F087C0] font-medium text-sm">
+                            点击上传图片
+                        </p>
+                    </>
+                )}
 
-                 {/* 点缀 */}
-                <Image src="/assets/icons/adorn-5.svg" alt="" width={21} height={20} className="absolute -bottom-14 -right-5 w-15 h-15" />
-                <Image src="/assets/icons/adorn-6.svg" alt="" width={21} height={20} className="absolute -bottom-14 right-9 w-5 h-5" />
-                <Image src="/assets/icons/adorn-7.svg" alt="" width={21} height={20} className="absolute -bottom-23 -left-7 w-10 h-8" />
+                {/* 点缀 */}
+                <Image src="/assets/icons/adorn-5.svg" alt="" width={21} height={20} className="absolute -bottom-14 -right-5 w-15 h-15 pointer-events-none" />
+                <Image src="/assets/icons/adorn-6.svg" alt="" width={21} height={20} className="absolute -bottom-14 right-9 w-5 h-5 pointer-events-none" />
+                <Image src="/assets/icons/adorn-7.svg" alt="" width={21} height={20} className="absolute -bottom-23 -left-7 w-10 h-8 pointer-events-none" />
             </div>
 
             <input

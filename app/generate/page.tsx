@@ -8,12 +8,14 @@ import { useAppStore } from '@/store/useAppStore';
 import ImagePreview from '@/components/ImagePreview';
 import ResultSelector from '@/components/ResultSelector';
 import BottomButton from '@/components/BottomButton';
-import { Toast, DotLoading } from 'antd-mobile';
+import { useToast } from '@/components/ui/Toast';
+import { DotLoading } from '@/components/ui/Loading';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function GeneratePage() {
     const router = useRouter();
+    const toast = useToast();
     const {
         orderNo,
         customSize,
@@ -59,10 +61,7 @@ export default function GeneratePage() {
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                Toast.show({
-                    content: '上传失败，请重试',
-                    position: 'center',
-                });
+                toast.show('上传失败，请重试');
             } finally {
                 setIsUploading(false);
             }
@@ -99,10 +98,7 @@ export default function GeneratePage() {
 
     const handleSubmit = async () => {
         if (!selectedType) {
-            Toast.show({
-                content: '请选择一种效果',
-                position: 'center',
-            });
+            toast.show('请选择一种效果');
             return;
         }
 
@@ -125,10 +121,7 @@ export default function GeneratePage() {
             const data = await response.json();
 
             if (data.success) {
-                Toast.show({
-                    content: '提交成功！',
-                    position: 'center',
-                });
+                toast.show('提交成功！');
 
                 setTimeout(() => {
                     reset();
@@ -137,18 +130,20 @@ export default function GeneratePage() {
             }
         } catch (error) {
             console.error('Submit error:', error);
-            Toast.show({
-                content: '提交失败，请重试',
-                position: 'center',
-            });
+            toast.show('提交失败，请重试');
         } finally {
             setIsSubmitting(false);
         }
     };
 
     // 如果没有裁剪图，返回首页
+    useEffect(() => {
+        if (!croppedImage) {
+            router.replace('/');
+        }
+    }, [croppedImage, router]);
+
     if (!croppedImage) {
-        router.push('/');
         return null;
     }
 
@@ -201,7 +196,7 @@ export default function GeneratePage() {
                 {/* 加载状态 */}
                 {isLoading && (
                     <div className="flex-1 flex flex-col items-center justify-center py-12">
-                        <DotLoading color="primary" className="text-pink-500 text-4xl mb-4" />
+                        <DotLoading className="text-pink-500 text-4xl mb-4" />
                         <p className="text-gray-600 text-base">AI 正在生成效果图...</p>
                         <p className="text-gray-400 text-sm mt-2">预计需要 10-15 秒</p>
                     </div>

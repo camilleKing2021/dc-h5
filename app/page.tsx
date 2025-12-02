@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
@@ -9,7 +9,18 @@ import BottomButton from '@/components/BottomButton';
 
 export default function Home() {
   const router = useRouter();
-  const { orderNo, customSize, contactPhone, originalFile, setOriginalFile, setPreviewUrl } = useAppStore();
+  const { orderNo, customSize, contactPhone, originalFile, setOriginalFile, setPreviewUrl, croppedImage } = useAppStore();
+  const [displayUrl, setDisplayUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (croppedImage) {
+      const url = URL.createObjectURL(croppedImage);
+      setDisplayUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setDisplayUrl(null);
+    }
+  }, [croppedImage]);
 
   const handleFileSelect = (file: File) => {
     setOriginalFile(file);
@@ -17,11 +28,14 @@ export default function Home() {
     // 生成预览 URL
     const url = URL.createObjectURL(file);
     setPreviewUrl(url);
+
+    // 立即跳转裁剪
+    router.push('/crop');
   };
 
   const handleNext = () => {
-    if (!originalFile) return;
-    router.push('/crop');
+    if (!croppedImage) return;
+    router.push('/generate');
   };
 
   return (
@@ -83,7 +97,7 @@ export default function Home() {
                 限一张 · 20M以内
               </span>
             </div>
-            <UploadBox onSelect={handleFileSelect} />
+            <UploadBox onSelect={handleFileSelect} previewImage={displayUrl} />
           </div>
         </div>
 
@@ -103,7 +117,7 @@ export default function Home() {
           <BottomButton
             text="提交"
             onClick={handleNext}
-            disabled={!originalFile}
+            disabled={!croppedImage}
             icon={
               <Image
                 src="/assets/icons/right.svg"

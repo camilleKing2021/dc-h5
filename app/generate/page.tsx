@@ -137,52 +137,48 @@ export default function GeneratePage() {
     };
 
     // 如果没有裁剪图，返回首页
-    useEffect(() => {
-        if (!croppedImage) {
-            router.replace('/');
-        }
-    }, [croppedImage, router]);
+    // useEffect(() => {
+    //     if (!croppedImage) {
+    //         router.replace('/');
+    //     }
+    // }, [croppedImage, router]);
 
-    if (!croppedImage) {
-        return null;
-    }
+    // if (!croppedImage) {
+    //     return null;
+    // }
 
     const isLoading = isUploading || (taskId && !cartoonUrl);
     const isDone = cartoonUrl && pixelUrl;
 
     return (
         <div className="min-h-screen bg-[url('/assets/bg/main-bg.png')] bg-cover bg-center">
-            <div className="min-h-screen px-5 py-8 flex flex-col">
-                {/* 标题 */}
-                <div className="text-center mb-6">
-                    <Image
-                        src="/assets/icons/logo.svg"
-                        alt="ODO CRAFTS"
-                        width={186}
-                        height={24}
-                        className="mx-auto"
-                        priority
-                    />
-                </div>
+            <div className="min-h-screen px-4 py-8 pt-6 flex flex-col">
 
                 {/* 订单信息 */}
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-md p-4 mb-4">
-                    <div className="grid grid-cols-3 gap-4 text-sm">
-                        <div>
-                            <div className="text-gray-500 mb-1">订单编号</div>
-                            <div className="font-medium text-gray-800">{orderNo}</div>
-                        </div>
-                        <div>
-                            <div className="text-gray-500 mb-1">定制尺寸</div>
-                            <div className="font-bold text-orange-400">
-                                {customSize.width}*{customSize.height}cm
-                            </div>
-                        </div>
-                        <div>
-                            <div className="text-gray-500 mb-1">联系方式</div>
-                            <div className="font-medium text-gray-800">{contactPhone}</div>
-                        </div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg p-6 mb-4 relative overflow-visible ">
+                    {/* 订单号 */}
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-[#ECEEF4]">
+                        <span className="text-sm text-[#9CA3AF]">订单编号</span>
+                        <span className="text-sm font-medium text-[#1E1F24]">{orderNo}</span>
                     </div>
+
+                    {/* 定制尺寸 */}
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-[#ECEEF4]">
+                        <span className="text-sm text-[#9CA3AF]">定制尺寸</span>
+                        <span className="text-base font-bold text-[#FF8F34] bg-[#FFF3E5] rounded-md py-0.5 px-2">
+                            {customSize.width}*{customSize.height}cm
+                        </span>
+                    </div>
+
+                    {/* 联系方式 */}
+                    <div className="flex items-center justify-between">
+                        <span className="text-sm text-[#9CA3AF]">联系方式</span>
+                        <span className="text-sm font-medium text-[#1E1F24]">{contactPhone}</span>
+                    </div>
+
+                    {/* 点缀 - 保持和首页一致 */}
+                    <Image src="/assets/icons/adorn-1.svg" alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
+                    <Image src="/assets/icons/adorn-3.svg" alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
                 </div>
 
                 {/* 定制照片预览 */}
@@ -244,13 +240,6 @@ export default function GeneratePage() {
                         />
                     </div>
                 )}
-
-                {/* 装饰元素 */}
-                <div className="fixed top-24 right-6 w-8 h-8 opacity-60">
-                    <svg className="w-full h-full text-pink-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                </div>
             </div>
         </div>
     );

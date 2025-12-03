@@ -61,13 +61,13 @@ export default function Home() {
           {/* 订单号 */}
           <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-[#ECEEF4]">
             <span className="text-sm text-[#9CA3AF]">订单编号</span>
-            <span className="text-sm font-medium text-[#1E1F24]">{orderNo}</span>
+            <span className="text-sm font-medium text-[#1E1F24] font-num">{orderNo}</span>
           </div>
 
           {/* 定制尺寸 */}
           <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-[#ECEEF4]">
             <span className="text-sm text-[#9CA3AF]">定制尺寸</span>
-            <span className="text-base font-bold text-[#FF8F34] bg-[#FFF3E5] rounded-md py-0.5 px-2">
+            <span className="text-base font-bold text-[#FF8F34] bg-[#FFF3E5] rounded-md py-0.5 px-2 font-num">
               {customSize.width}*{customSize.height}cm
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function Home() {
           {/* 联系方式 */}
           <div className="flex items-center justify-between">
             <span className="text-sm text-[#9CA3AF]">联系方式</span>
-            <span className="text-sm font-medium text-[#1E1F24]">{contactPhone}</span>
+            <span className="text-sm font-medium text-[#1E1F24] font-num">{contactPhone}</span>
           </div>
 
           {/* 点缀 */}

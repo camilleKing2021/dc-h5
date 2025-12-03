@@ -7,18 +7,20 @@
  * @LastEditTime: 2025-12-02 22:20:26
  */
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { ToastProvider } from "@/components/ui/Toast";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const sanjiFont = localFont({
+  src: "./fonts/SanJiCuYuanJianTi-2.ttf",
+  variable: "--font-sanji",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const alimamaFont = localFont({
+  src: "./fonts/AlimamaFangYuanTiVF-Thin-2.ttf",
+  variable: "--font-alimama",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -38,9 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sanjiFont.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex justify-center bg-[#F8F8F8]`}
+        className="antialiased flex justify-center bg-[#F8F8F8]"
       >
         <ToastProvider>
           <div className="w-full max-w-[750px] min-h-screen">

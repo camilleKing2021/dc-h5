@@ -175,13 +175,13 @@ export default function GeneratePage() {
                     {/* 订单号 */}
                     <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-[#ECEEF4]">
                         <span className="text-sm text-[#9CA3AF]">订单编号</span>
-                        <span className="text-sm font-medium text-[#1E1F24]">{orderNo}</span>
+                        <span className="text-sm font-medium text-[#1E1F24] font-num">{orderNo}</span>
                     </div>
 
                     {/* 定制尺寸 */}
                     <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-[#ECEEF4]">
                         <span className="text-sm text-[#9CA3AF]">定制尺寸</span>
-                        <span className="text-base font-bold text-[#FF8F34] bg-[#FFF3E5] rounded-md py-0.5 px-2">
+                        <span className="text-base font-bold text-[#FF8F34] bg-[#FFF3E5] rounded-md py-0.5 px-2 font-num">
                             {customSize.width}*{customSize.height}cm
                         </span>
                     </div>
@@ -189,7 +189,7 @@ export default function GeneratePage() {
                     {/* 联系方式 */}
                     <div className="flex items-center justify-between">
                         <span className="text-sm text-[#9CA3AF]">联系方式</span>
-                        <span className="text-sm font-medium text-[#1E1F24]">{contactPhone}</span>
+                        <span className="text-sm font-medium text-[#1E1F24] font-num">{contactPhone}</span>
                     </div>
 
                     {/* 点缀 - 保持和首页一致 */}
@@ -197,64 +197,67 @@ export default function GeneratePage() {
                     <Image src="/assets/icons/adorn-3.svg" alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
                 </div>
 
-                {/* 定制照片预览 */}
-                <div className="mb-6">
-                    <h2 className="text-[16px] font-medium text-[#8B5E3C] mb-3">您的定制图片：</h2>
-                    <div className="w-[40%]">
-                        {previewUrl && (
-                            <ImagePreview
-                                src={previewUrl}
-                                alt="定制照片"
-                                onClick={() => handlePreview(previewUrl)}
-                            />
-                        )}
+                {/* 定制照片和生成结果卡片 */}
+                <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg p-6 mb-6 relative overflow-visible flex-1 flex flex-col">
+                    {/* 定制照片预览 */}
+                    <div className="mb-6">
+                        <h2 className="text-[16px] font-medium text-[#8B5E3C] mb-3">您的定制图片：</h2>
+                        <div className="w-[40%]">
+                            {previewUrl && (
+                                <ImagePreview
+                                    src={previewUrl}
+                                    alt="定制照片"
+                                    onClick={() => handlePreview(previewUrl)}
+                                />
+                            )}
+                        </div>
                     </div>
+
+                    {/* 加载状态 */}
+                    {isLoading && (
+                        <div className="flex-1 flex flex-col items-center justify-center py-12">
+                            <div className="mb-4">
+                                <Trefoil
+                                    size="40"
+                                    stroke="4"
+                                    strokeLength="0.15"
+                                    bgOpacity="0.4"
+                                    speed="1.4"
+                                    color="#fdaab0ff"
+                                />
+                            </div>
+                            <p className="text-gray-600 text-base">AI 正在生成效果图...</p>
+                            <p className="text-gray-400 text-sm mt-2">预计需要 10-15 秒</p>
+                        </div>
+                    )}
+
+                    {/* 生成结果 */}
+                    {isDone && (
+                        <div className="flex-1">
+                            <ResultSelector
+                                cartoonUrl={cartoonUrl}
+                                pixelUrl={pixelUrl}
+                                selectedType={selectedType}
+                                onSelect={handleSelectType}
+                                onPreview={handlePreview}
+                            />
+                        </div>
+                    )}
+
+                    {/* 错误提示 */}
+                    {taskError && (
+                        <div className="flex-1 flex items-center justify-center py-12">
+                            <div className="text-center">
+                                <p className="text-red-500 text-base mb-4">生成失败，请重试</p>
+                                <BottomButton
+                                    text="重新上传"
+                                    onClick={handleReupload}
+                                    variant="secondary"
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
-
-                {/* 加载状态 */}
-                {isLoading && (
-                    <div className="flex-1 flex flex-col items-center justify-center py-12">
-                        <div className="mb-4">
-                            <Trefoil
-                                size="40"
-                                stroke="4"
-                                strokeLength="0.15"
-                                bgOpacity="0.4"
-                                speed="1.4"
-                                color="#fdaab0ff"
-                            />
-                        </div>
-                        <p className="text-gray-600 text-base">AI 正在生成效果图...</p>
-                        <p className="text-gray-400 text-sm mt-2">预计需要 10-15 秒</p>
-                    </div>
-                )}
-
-                {/* 生成结果 */}
-                {isDone && (
-                    <div className="flex-1 mb-6">
-                        <ResultSelector
-                            cartoonUrl={cartoonUrl}
-                            pixelUrl={pixelUrl}
-                            selectedType={selectedType}
-                            onSelect={handleSelectType}
-                            onPreview={handlePreview}
-                        />
-                    </div>
-                )}
-
-                {/* 错误提示 */}
-                {taskError && (
-                    <div className="flex-1 flex items-center justify-center py-12">
-                        <div className="text-center">
-                            <p className="text-red-500 text-base mb-4">生成失败，请重试</p>
-                            <BottomButton
-                                text="重新上传"
-                                onClick={handleReupload}
-                                variant="secondary"
-                            />
-                        </div>
-                    </div>
-                )}
 
                 {/* 底部按钮 */}
                 {isDone && (

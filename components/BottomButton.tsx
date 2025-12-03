@@ -27,7 +27,7 @@ export default function BottomButton({
     icon,
     className = '',
 }: BottomButtonProps) {
-    const baseClasses = 'w-full py-4 rounded-full font-medium text-base transition-all active:scale-95 disabled:active:scale-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer';
+    const baseClasses = 'w-full h-12 rounded-full font-medium text-base transition-all active:scale-95 disabled:active:scale-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer';
 
     const variantClasses = {
         primary: 'bg-[linear-gradient(91.18deg,#FF9BA2_0%,#FFB7B2_100%)] text-white shadow-lg shadow-pink-200',

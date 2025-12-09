@@ -9,7 +9,6 @@ import BottomButton from '@/components/BottomButton';
 import { useToast } from '@/components/ui/Toast';
 import FullScreenViewer from '@/components/FullScreenViewer';
 import ConfirmModal from '@/components/ConfirmModal';
-import { BASE_PATH } from '@/config/basePath';
 // @ts-ignore
 import { Trefoil } from 'ldrs/react';
 // @ts-ignore
@@ -40,7 +39,7 @@ export default function GeneratePage() {
             setIsUploading(false);
 
             await new Promise((resolve) => setTimeout(resolve, 3000));
-            setGeneratedUrls(`${BASE_PATH}/assets/mock/cartoon.svg`, `${BASE_PATH}/assets/mock/pixel.svg`);
+            setGeneratedUrls('/assets/mock/cartoon.svg', '/assets/mock/pixel.svg');
         };
 
         mockUpload();
@@ -70,7 +69,7 @@ export default function GeneratePage() {
     return (
         <>
             {/* 全屏背景图 */}
-            <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: `url('${BASE_PATH}/assets/bg/main-bg.png')` }} />
+            <div className="fixed inset-0 bg-[url('/assets/bg/main-bg.png')] bg-cover bg-center -z-10" />
 
             <div className="min-h-screen px-4 py-5 flex flex-col relative">
                 {/* 订单信息 */}
@@ -89,8 +88,8 @@ export default function GeneratePage() {
                         <span className="text-sm text-[#9CA3AF]">联系方式</span>
                         <span className="text-sm font-medium text-[#1E1F24] font-num">{contactPhone}</span>
                     </div>
-                    <img src={`${BASE_PATH}/assets/icons/adorn-1.svg`} alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
-                    <img src={`${BASE_PATH}/assets/icons/adorn-3.svg`} alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
+                    <img src="/assets/icons/adorn-1.svg" alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
+                    <img src="/assets/icons/adorn-3.svg" alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
                 </div>
 
                 {/* 定制照片和生成结果卡片 */}

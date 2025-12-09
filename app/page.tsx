@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 import UploadBox from '@/components/UploadBox';
 import BottomButton from '@/components/BottomButton';
-import { BASE_PATH } from '@/config/basePath';
 
 export default function Home() {
   const router = useRouter();
@@ -37,12 +36,12 @@ export default function Home() {
   return (
     <>
       {/* 全屏背景图 */}
-      <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: `url('${BASE_PATH}/assets/bg/main-bg.png')` }} />
+      <div className="fixed inset-0 bg-[url('/assets/bg/main-bg.png')] bg-cover bg-center -z-10" />
 
       <div className="min-h-screen px-4 py-5 flex flex-col relative">
         {/* 标题 */}
         <div className="text-center mb-5">
-          <img src={`${BASE_PATH}/assets/icons/logo.svg`} alt="ODO CRAFTS" width={186} height={24} className="mx-auto" />
+          <img src="/assets/icons/logo.svg" alt="ODO CRAFTS" width={186} height={24} className="mx-auto" />
         </div>
 
         {/* 订单信息卡片 */}
@@ -61,10 +60,10 @@ export default function Home() {
             <span className="text-sm text-[#9CA3AF]">联系方式</span>
             <span className="text-sm font-medium text-[#1E1F24] font-num">{contactPhone}</span>
           </div>
-          <img src={`${BASE_PATH}/assets/icons/adorn-1.svg`} alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
-          <img src={`${BASE_PATH}/assets/icons/adorn-2.svg`} alt="" width={25} height={17} className="absolute -top-3 -right-4 w-8 h-6" />
-          <img src={`${BASE_PATH}/assets/icons/adorn-3.svg`} alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
-          <img src={`${BASE_PATH}/assets/icons/adorn-4.svg`} alt="" width={48} height={48} className="absolute -bottom-7 -left-4 w-8 h-8" />
+          <img src="/assets/icons/adorn-1.svg" alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
+          <img src="/assets/icons/adorn-2.svg" alt="" width={25} height={17} className="absolute -top-3 -right-4 w-8 h-6" />
+          <img src="/assets/icons/adorn-3.svg" alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
+          <img src="/assets/icons/adorn-4.svg" alt="" width={48} height={48} className="absolute -bottom-7 -left-4 w-8 h-8" />
         </div>
 
         {/* 上传区域 */}
@@ -82,7 +81,7 @@ export default function Home() {
 
         {/* 底部装饰 */}
         <div className="text-center mb-6">
-          <img src={`${BASE_PATH}/assets/icons/logo.svg`} alt="ODO CRAFTS" width={124} height={16} className="mx-auto opacity-30" />
+          <img src="/assets/icons/logo.svg" alt="ODO CRAFTS" width={124} height={16} className="mx-auto opacity-30" />
         </div>
 
         {/* 提交按钮 */}
@@ -91,7 +90,7 @@ export default function Home() {
             text="提交"
             onClick={handleNext}
             disabled={!croppedImage}
-            icon={<img src={`${BASE_PATH}/assets/icons/right.svg`} alt="" width={20} height={20} />}
+            icon={<img src="/assets/icons/right.svg" alt="" width={20} height={20} />}
           />
         </div>
       </div>

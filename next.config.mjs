@@ -4,7 +4,7 @@
  * @Version: 0.0.1
  * @Date: 2025-12-09 15:56:37
  * @LastEditors: zhaozheng
- * @LastEditTime: 2025-12-09 17:02:45
+ * @LastEditTime: 2025-12-09 17:15:45
  */
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const isStaticExport = process.env.STATIC_EXPORT === 'true';

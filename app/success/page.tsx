@@ -4,15 +4,20 @@
  * @Version: 0.0.1
  * @Date: 2025-12-09 13:36:16
  * @LastEditors: zhaozheng
- * @LastEditTime: 2025-12-09 16:46:32
+ * @LastEditTime: 2025-12-09 17:22:01
  */
 'use client';
 
 export default function SuccessPage() {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
     return (
         <>
             {/* 全屏背景图 */}
-            <div className="fixed inset-0 bg-[url('/assets/bg/main-bg.png')] bg-cover bg-center -z-10" />
+            <div 
+                className="fixed inset-0 bg-cover bg-center -z-10"
+                style={{ backgroundImage: `url('${basePath}/assets/bg/main-bg.png')` }}
+            />
 
             <div className="min-h-screen flex justify-center">
                 <div className="text-center px-6 pt-[100px]">

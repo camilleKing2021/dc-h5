@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sanJi.variable}  ${alimama.variable} antialiased flex justify-center bg-[#F8F8F8]`}>
+      <body className={`${sanJi.variable} ${alimama.variable} antialiased flex justify-center bg-[#F8F8F8]`}>
         <ToastProvider>
           <div className="w-full max-w-[750px] min-h-screen">
             {children}

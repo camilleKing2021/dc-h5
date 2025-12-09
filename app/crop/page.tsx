@@ -21,7 +21,7 @@ export default function CropPage() {
     const toast = useToast();
     const { previewUrl, customSize, setCroppedImage } = useAppStore();
     const [isProcessing, setIsProcessing] = useState(false);
-    const cropperRef = useRef<ReactCropperElement>(null);
+    const cropperRef = useRef<ReactCropperElement | null>(null);
 
     // 计算裁剪比例
     const aspect = customSize.width / customSize.height;

@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'SanJi';
-  src: url('/fonts/SanJiCuYuanJianTi-2.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Alimama';
-  src: url('/fonts/AlimamaFangYuanTiVF-Thin-2.ttf') format('truetype');
-  font-display: swap;
-}
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -22,9 +10,9 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'SanJi', sans-serif;
+  font-family: var(--font-sanji), sans-serif;
 }
 
 .font-num {
-  font-family: 'Alimama', sans-serif !important;
+  font-family: var(--font-alimama), sans-serif !important;
 }

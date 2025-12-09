@@ -23,6 +23,8 @@ export default function GeneratePage() {
         setTaskId, setGeneratedUrls, setSelectedType, reset,
     } = useAppStore();
 
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
     const [isUploading, setIsUploading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [viewerState, setViewerState] = useState<{ isOpen: boolean; src: string }>({ isOpen: false, src: '' });
@@ -39,7 +41,7 @@ export default function GeneratePage() {
             setIsUploading(false);
 
             await new Promise((resolve) => setTimeout(resolve, 3000));
-            setGeneratedUrls('/assets/mock/cartoon.svg', '/assets/mock/pixel.svg');
+            setGeneratedUrls(`${basePath}/assets/mock/cartoon.svg`, `${basePath}/assets/mock/pixel.svg`);
         };
 
         mockUpload();
@@ -69,7 +71,10 @@ export default function GeneratePage() {
     return (
         <>
             {/* 全屏背景图 */}
-            <div className="fixed inset-0 bg-[url('/assets/bg/main-bg.png')] bg-cover bg-center -z-10" />
+            <div 
+                className="fixed inset-0 bg-cover bg-center -z-10"
+                style={{ backgroundImage: `url('${basePath}/assets/bg/main-bg.png')` }}
+            />
 
             <div className="min-h-screen px-4 py-5 flex flex-col relative">
                 {/* 订单信息 */}
@@ -88,8 +93,8 @@ export default function GeneratePage() {
                         <span className="text-sm text-[#9CA3AF]">联系方式</span>
                         <span className="text-sm font-medium text-[#1E1F24] font-num">{contactPhone}</span>
                     </div>
-                    <img src="/assets/icons/adorn-1.svg" alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
-                    <img src="/assets/icons/adorn-3.svg" alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
+                    <img src={`${basePath}/assets/icons/adorn-1.svg`} alt="" width={21} height={20} className="absolute top-2 -left-4 w-6 h-6" />
+                    <img src={`${basePath}/assets/icons/adorn-3.svg`} alt="" width={36} height={36} className="absolute bottom-2 -right-4 w-8 h-8" />
                 </div>
 
                 {/* 定制照片和生成结果卡片 */}
@@ -119,9 +124,9 @@ export default function GeneratePage() {
                 {isDone && (
                     <div className="flex gap-4 pb-6 items-center">
                         <div className="flex-1">
-                            <BottomButton text="重新上传" onClick={handleReupload} variant="secondary" disabled={isSubmitting} className="bg-transparent! border-[#FFB7B2]! text-[#FF9BA2]! shadow-none!" />
+                            <BottomButton text="重新上传" onClick={handleReupload} variant="secondary" disabled={isSubmitting} className="!bg-transparent !border-[#FFB7B2] !text-[#FF9BA2] !shadow-none" />
                         </div>
-                        <div className="flex-2">
+                        <div className="w-[64%]">
                             <BottomButton text={isSubmitting ? '提交中...' : '选择完成，开始制作'} onClick={handleSubmit} disabled={!selectedType || isSubmitting} />
                         </div>
                     </div>

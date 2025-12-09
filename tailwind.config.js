@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['SanJi', 'sans-serif'],
-        num: ['Alimama', 'sans-serif'],
+        sans: ['var(--font-sanji)', 'sans-serif'],
+        num: ['var(--font-alimama)', 'sans-serif'],
       },
     },
   },

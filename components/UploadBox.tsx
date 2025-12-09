@@ -22,6 +22,8 @@ export default function UploadBox({ onSelect, previewImage }: UploadBoxProps) {
         onSelect(file);
     };
 
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
     return (
         <>
             <div onClick={handleClick} className="relative w-full h-[300px] bg-[#fff0f5] rounded-3xl border-2 border-dashed border-[#F9A8D4] flex flex-col items-center justify-center cursor-pointer">
@@ -30,14 +32,14 @@ export default function UploadBox({ onSelect, previewImage }: UploadBoxProps) {
                 ) : (
                     <>
                         <div className="w-12 h-12 mb-3 flex items-center justify-center bg-white rounded-full">
-                            <img src="/assets/icons/upload.svg" alt="上传" width={19} height={19} />
+                            <img src={`${basePath}/assets/icons/upload.svg`} alt="上传" width={19} height={19} />
                         </div>
                         <p className="text-[#F087C0] font-medium text-sm">点击上传图片</p>
                     </>
                 )}
-                <img src="/assets/icons/adorn-5.svg" alt="" className="absolute -bottom-14 -right-5 w-15 h-15 pointer-events-none" />
-                <img src="/assets/icons/adorn-6.svg" alt="" className="absolute -bottom-14 right-9 w-5 h-5 pointer-events-none" />
-                <img src="/assets/icons/adorn-7.svg" alt="" className="absolute -bottom-23 -left-7 w-10 h-8 pointer-events-none" />
+                <img src={`${basePath}/assets/icons/adorn-5.svg`} alt="" className="absolute -bottom-14 -right-5 w-15 h-15 pointer-events-none" />
+                <img src={`${basePath}/assets/icons/adorn-6.svg`} alt="" className="absolute -bottom-14 right-9 w-5 h-5 pointer-events-none" />
+                <img src={`${basePath}/assets/icons/adorn-7.svg`} alt="" className="absolute -bottom-[90px] -left-7 w-10 h-8 pointer-events-none" />
             </div>
             <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
             <p className="text-center text-[12px] text-[#C99685] mt-4">请确保定制图片清晰，图片只能上传1张</p>

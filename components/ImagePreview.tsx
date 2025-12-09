@@ -1,8 +1,5 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
-
 interface ImagePreviewProps {
     src: string;
     alt?: string;
@@ -23,12 +20,10 @@ export default function ImagePreview({
             className={`relative w-full aspect-square overflow-hidden ${rounded ? 'rounded-2xl' : ''} ${className} ${onClick ? 'cursor-pointer' : ''}`}
             onClick={onClick}
         >
-            <Image
+            <img
                 src={src}
                 alt={alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="w-full h-full object-cover"
             />
         </div>
     );

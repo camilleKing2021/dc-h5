@@ -4,9 +4,9 @@
  * @Version: 0.0.1
  * @Date: 2025-12-01 19:28:22
  * @LastEditors: zhaozheng
- * @LastEditTime: 2025-12-02 22:20:26
+ * @LastEditTime: 2025-12-09 14:36:43
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { ToastProvider } from "@/components/ui/Toast";
 import "./globals.css";
@@ -26,12 +26,13 @@ const alimamaFont = localFont({
 export const metadata: Metadata = {
   title: "ODO CRAFTS",
   description: "定制照片生成服务",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

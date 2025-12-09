@@ -27,7 +27,7 @@ assets/
 <div className="bg-[url('/assets/bg/main-bg.png')]" />
 
 // 图标
-<Image src="/assets/icons/upload.png" alt="上传" />
+<Image src="./assets/icons/upload.png" alt="上传" />
 
 // Mock 图片
 <Image src="/assets/mock/cartoon.jpg" alt="卡通效果" />

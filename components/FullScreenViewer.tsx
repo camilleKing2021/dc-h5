@@ -1,8 +1,5 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
-
 interface FullScreenViewerProps {
     isOpen: boolean;
     onClose: () => void;
@@ -31,13 +28,10 @@ export default function FullScreenViewer({ isOpen, onClose, src, alt = 'Preview'
                 className="relative w-full h-full max-w-4xl max-h-[90vh] flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
             >
-                <Image
+                <img
                     src={src}
                     alt={alt}
-                    fill
-                    className="object-contain"
-                    sizes="100vw"
-                    priority
+                    className="max-w-full max-h-full object-contain"
                 />
             </div>
         </div>

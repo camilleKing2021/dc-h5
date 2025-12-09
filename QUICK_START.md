@@ -103,7 +103,7 @@ public/assets/mock/
 ### 添加图标
 将图标文件放入 `public/assets/icons/` 目录，并在组件中引用：
 ```tsx
-<Image src="/assets/icons/star.png" alt="星星" width={24} height={24} />
+<Image src="./assets/icons/star.png" alt="星星" width={24} height={24} />
 ```
 
 ### 连接真实 API

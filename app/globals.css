@@ -1,30 +1,30 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'SanJi';
+  src: url('/fonts/SanJiCuYuanJianTi-2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alimama';
+  src: url('/fonts/AlimamaFangYuanTiVF-Thin-2.ttf') format('truetype');
+  font-display: swap;
+}
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sanji), sans-serif;
-  --font-num: var(--font-alimama), sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: 'SanJi', sans-serif;
 }
 
 .font-num {
-  font-family: var(--font-num) !important;
+  font-family: 'Alimama', sans-serif !important;
 }
